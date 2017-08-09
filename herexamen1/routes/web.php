@@ -19,8 +19,9 @@ Route::get('/todo',function () {
     return view('todo');
 });
 Auth::routes();
+Route::auth();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 
 Route::get("todos", 'todos@index');
 Route::post("todos", 'todos@store');
