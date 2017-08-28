@@ -24,7 +24,9 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 
 Route::get("todos", 'todos@index');
-Route::post("todos", 'todos@store');
-
+Route::get("todoVoltooid/{id}", 'todos@updateVoltooid');
+Route::get("todoBezig/{id}", 'todos@updateTodo');
 
 Route::get("todoVerwijderen/{id}", 'todos@destroy');
+
+Route::post("todoToevoegen", 'todos@create');

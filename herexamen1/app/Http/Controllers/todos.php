@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 use App\todo;
 
@@ -16,8 +18,9 @@ class todos extends Controller
      */
     public function index()
     {
+        $id = Auth::id();
         $todo = new Todo();
-        $allTodo = $todo->ophalenTodo();
+        $allTodo = $todo->ophalenTodo($id);
 
         return view('todo',['allTodo' => $allTodo]);
     }
@@ -29,7 +32,11 @@ class todos extends Controller
      */
     public function create()
     {
-        //
+        $userId = Auth::id();
+        $taak = Input::get("taak");
+        $todo = new Todo();
+        $todo->toevoegenTodo($taak,$userId);
+        return redirect()->back();
     }
 
     /**
@@ -38,10 +45,11 @@ class todos extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        todo::create(Request::all());
-        return view('todo');
+        $todo = new Todo();
+        $todo->wijzigenTodo($id);
+        return redirect()->back()->with('message', 'de taak is klaar');
     }
 
     /**
@@ -73,9 +81,19 @@ class todos extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateVoltooid($id)
     {
-        //
+        $todo = new Todo();
+        $todo->wijzigenTodo($id);
+        return redirect()->back();
+    }
+
+
+    public function updateTodo($id)
+    {
+        $todo = new Todo();
+        $todo->wijzigenTodoBezig($id);
+        return redirect()->back();
     }
 
     /**
@@ -86,9 +104,8 @@ class todos extends Controller
      */
     public function destroy($id)
     {
-
         $todo = new Todo();
         $todo->verwijderenTodo($id);
-        return view('welcome');
+        return redirect()->back()->with('message', 'de taak is verwijderd');
     }
 }
