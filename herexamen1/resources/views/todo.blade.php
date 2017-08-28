@@ -38,7 +38,7 @@
             <th>voltooid</th>
             <th>idTaak</th>
             <th>Taak</th>
-            <th>idUser</th>
+            <th>Username</th>
             <th>Verwijderen</th>
             </tr>
         @foreach($allTodo as $key => $taak)
@@ -47,7 +47,7 @@
         <td><a href="/todoBezig/{{ $taak->idTodo }}">Toch nog bezig</a></td>
         <td>{{ $taak->idTodo }}</td>
         <td>{{ $taak->todo }}</td>
-        <td>{{ $taak->idUser }}</td>
+        <td>{{ $taak->name }}</td>
         <td><a href="/todoVerwijderen/{{ $taak->idTodo }}">Verwijder</a></td>
         </tr>
         @endif
